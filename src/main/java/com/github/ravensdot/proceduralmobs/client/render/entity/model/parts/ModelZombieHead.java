@@ -3,21 +3,29 @@ package com.github.ravensdot.proceduralmobs.client.render.entity.model.parts;
 import com.github.ravensdot.proceduralmobs.entity.ProceduralEntity;
 import net.minecraft.client.renderer.model.ModelRenderer;
 
-public class ModelSpiderHead extends AbstractModelParts {
-    private final ModelRenderer head;
-    private final PartSpawnLocation spawnLocation;
-    private final PartTypes partType = PartTypes.HEAD;
+public class ModelZombieHead extends AbstractModelParts
+{
+    private ModelRenderer head;
+    private PartSpawnLocation bodySpawnLocation;
+    private PartTypes partType = PartTypes.HEAD;
 
-    public ModelSpiderHead(float offX, float offY, float offZ, ModelRenderer head)
-    {
+    /**
+     * Constructor, initializes parts and positions.
+     *
+     * @param offX X position offset
+     * @param offY Y position offset
+     * @param offZ Z position offset
+     * @param head Head model renderer
+     */
+    public ModelZombieHead(float offX, float offY, float offZ, ModelRenderer head) {
         super(offX, offY, offZ, head);
 
         //TODO: set location postions
-        spawnLocation = new PartSpawnLocation(0.0f + offX, 15.0f + offY, -3.0f + offZ, PartTypes.HEAD);
-        this.head = head;
-        head.setRotationPoint(spawnLocation.getLocX(), spawnLocation.getLocY(), spawnLocation.getLocZ());
-        head.setTextureOffset(96, 4).addBox(-4.0F, -4.0F, -8.0F, 8.0F, 8.0F, 8.0F, 0.0F, false);
+        bodySpawnLocation = new PartSpawnLocation(0.0f, 0.0f, 0.0f, PartTypes.BODY);
 
+        this.head = head;
+        this.head.setTextureOffset(0,0).addBox(-4.0f, -8.0f, -4.0f, 8.0f, 8.0f, 8.0f, false);
+        this.head.setRotationPoint(0.0f + offX, 0.0f + offY, 0.0f + offZ);
     }
 
     @Override
@@ -39,6 +47,6 @@ public class ModelSpiderHead extends AbstractModelParts {
 
     @Override
     public PartSpawnLocation[] getPartSpawnLocation() {
-        return new PartSpawnLocation[]{spawnLocation};
+        return new PartSpawnLocation[]{bodySpawnLocation};
     }
 }

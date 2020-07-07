@@ -3,6 +3,7 @@ package com.github.ravensdot.proceduralmobs.client.render.entity.model;
 import com.github.ravensdot.proceduralmobs.ProceduralMobs;
 import com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.*;
 import com.github.ravensdot.proceduralmobs.entity.ProceduralEntity;
+import com.github.ravensdot.proceduralmobs.init.ModEntityTypes;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Maps;
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -20,25 +21,37 @@ import java.util.*;
 
 public class ProceduralEntityModel<T extends Entity> extends SegmentedModel<T> {
 
+    public static final int TEXTURE_WIDTH = 256;
+    public static final int TEXTURE_HEIGHT = 256;
     private final ImmutableList<ModelRenderer> partList;
     //private Map<Enum<PartTypes>, AbstractModelParts> modelParts = new HashMap<>();
     private final List<AbstractModelParts> modelParts = new ArrayList<>();
 
     public ProceduralEntityModel()
     {
-        this.textureWidth = 256;
-        this.textureHeight = 128;
+        this.textureWidth = TEXTURE_WIDTH;
+        this.textureHeight = TEXTURE_HEIGHT;
         //modelParts.put(PartTypes.ZOMBIE_LEGS, new ModelZombieLegs(new ModelRenderer(this), new ModelRenderer(this)));
         //ModelZombieLegs legs = (ModelZombieLegs)modelParts.get(PartTypes.ZOMBIE_LEGS);
-        modelParts.add(new ModelZombieLegs(new ModelRenderer(this), new ModelRenderer(this)));
-        modelParts.add(new ModelZombieBody(new ModelRenderer(this)));
-
         Random random = new Random();
+        if (random.nextBoolean()) {
+            modelParts.add(new ModelZombieLegs(0.0f, 0.0f, 0.0f, new ModelRenderer(this), new ModelRenderer(this)));
+        } else {
+            modelParts.add(new ModelSpiderBody(0.0f, 0.0f, 0.0f, new ModelRenderer(this), new ModelRenderer(this)));
+        }
         if (random.nextBoolean())
-            modelParts.add(new ModelSpiderHead(new ModelRenderer(this), 0f, 0f, 0f));
+            modelParts.add(new ModelSpiderHead(0.0f, -10.0f, 0.0f, new ModelRenderer(this)));
+        else
+            modelParts.add(new ModelZombieHead(0.0f, 0.0f, 0.0f, new ModelRenderer(this)));
 
         if (random.nextBoolean()) {
-            modelParts.add(new ModelSkeletonArm(new ModelRenderer(this), new ModelRenderer(this), -1.0f, -2.0f, -1.0f));
+            modelParts.add(new ModelSkeletonArm(0.0f, 0.0f, 0.0f, new ModelRenderer(this), new ModelRenderer(this)));
+        }
+
+        if (random.nextBoolean()) {
+            modelParts.add(new ModelZombieBody(0.0f, 0.0f, 0.0f, new ModelRenderer(this)));
+        } else {
+            modelParts.add(new ModelSkeletonBody(0.0f, 0.0f, 0.0f, new ModelRenderer(this)));
         }
 
         ImmutableList.Builder<ModelRenderer> builder = ImmutableList.builder();

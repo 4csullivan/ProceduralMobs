@@ -1,30 +1,30 @@
 package com.github.ravensdot.proceduralmobs.client.render.entity.model.parts;
 
 import com.github.ravensdot.proceduralmobs.entity.ProceduralEntity;
-import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.vertex.IVertexBuilder;
-import net.minecraft.client.renderer.entity.model.BipedModel;
-import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.util.math.MathHelper;
 
 public class ModelZombieLegs extends AbstractModelParts {
 
     private final ModelRenderer rightLeg;
     private final ModelRenderer leftLeg;
+    private final PartSpawnLocation bodySpawnLocation;
+    private final PartTypes partType = PartTypes.LEGS;
 
-    public ModelZombieLegs(ModelRenderer leftLeg, ModelRenderer rightLeg)
+    public ModelZombieLegs(float offX, float offY, float offZ, ModelRenderer leftLeg, ModelRenderer rightLeg)
     {
-        super();
+        super(offX, offY, offZ, leftLeg, rightLeg);
+
+        //TODO: set location postions
+        bodySpawnLocation = new PartSpawnLocation(1.9f, 12.0f, 0.0f, PartTypes.BODY);
+
         this.rightLeg = rightLeg;
-        this.rightLeg.setRotationPoint(-1.9F, 12.0F, 0.0F);
+        this.rightLeg.setRotationPoint(-1.9F - offX, 12.0F + offY, 0.0f + offZ);
         this.setRotationAngle(rightLeg, -0.4363F, 0.0F, 0.0873F);
         this.rightLeg.setTextureOffset(0, 16).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.0F, false);
 
         this.leftLeg = leftLeg;
-        this.leftLeg.setRotationPoint(1.9F, 12.0F, 0.0F);
+        this.leftLeg.setRotationPoint(1.9F + offX, 12.0F + offY, 0.0f + offZ);
         this.setRotationAngle(leftLeg, 0.3491F, 0.0F, 0.0F);
         this.leftLeg.setTextureOffset(0, 16).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.0F, true);
     }
@@ -36,7 +36,7 @@ public class ModelZombieLegs extends AbstractModelParts {
     }
 
     @Override
-    public ModelRenderer[] updateAngles(ProceduralEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float HeadPitch) {
+    public ModelRenderer[] updateAngles(ProceduralEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         this.rightLeg.rotationPointZ = 0.1F;
         this.leftLeg.rotationPointZ = 0.1F;
         this.rightLeg.rotationPointY = 12.0F;
@@ -47,6 +47,16 @@ public class ModelZombieLegs extends AbstractModelParts {
         this.rightLeg.rotateAngleY = 0.0F;
         this.leftLeg.rotateAngleY = 0.0F;
         return new ModelRenderer[]{leftLeg, rightLeg};
+    }
+
+    @Override
+    public PartTypes getPartType() {
+        return partType;
+    }
+
+    @Override
+    public PartSpawnLocation[] getPartSpawnLocation() {
+        return new PartSpawnLocation[]{bodySpawnLocation};
     }
 
     public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {

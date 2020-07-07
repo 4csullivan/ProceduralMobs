@@ -1,5 +1,6 @@
 package com.github.ravensdot.proceduralmobs;
 
+import com.github.ravensdot.proceduralmobs.init.ModEntityTypes;
 import com.github.ravensdot.proceduralmobs.util.RegistryHandler;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
@@ -29,6 +30,7 @@ public class ProceduralMobs
         PROCEDURAL_SEED = rand.nextInt(1000000000);
 
         MinecraftForge.EVENT_BUS.register(this);
+        ModEntityTypes.init();
         RegistryHandler.init();
     }
 
