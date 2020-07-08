@@ -3,10 +3,9 @@ package com.github.ravensdot.proceduralmobs.client.render.entity.model;
 import com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.*;
 import com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.skeleton.ModelSkeletonArm;
 import com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.skeleton.ModelSkeletonBody;
+import com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.skeleton.ModelSkeletonHead;
 import com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.spider.ModelSpiderBody;
 import com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.spider.ModelSpiderHead;
-import com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.spider.ModelSpiderLegs;
-import com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.zombie.ModelZombieBody;
 import com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.zombie.ModelZombieHead;
 import com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.zombie.ModelZombieLegs;
 import com.github.ravensdot.proceduralmobs.entity.ProceduralEntity;
@@ -26,46 +25,19 @@ public class ProceduralEntityModel<T extends Entity> extends SegmentedModel<T> {
     private final ImmutableList<ModelRenderer> partList;
     //private Map<Enum<PartTypes>, AbstractModelParts> modelParts = new HashMap<>();
     private final List<AbstractModelParts> modelParts = new ArrayList<>();
+    private final Random random;
 
     public ProceduralEntityModel()
     {
         this.textureWidth = TEXTURE_WIDTH;
         this.textureHeight = TEXTURE_HEIGHT;
-        //modelParts.put(PartTypes.ZOMBIE_LEGS, new ModelZombieLegs(new ModelRenderer(this), new ModelRenderer(this)));
-        //ModelZombieLegs legs = (ModelZombieLegs)modelParts.get(PartTypes.ZOMBIE_LEGS);
-        float cumulativeX = 0.0f;
-        float cumulativeY = 0.0f;
-        float cumulativeZ = 0.0f;
-        Random random = new Random();
-        if (random.nextBoolean()) {
-            modelParts.add(new ModelZombieLegs(0.0f, 0.0f, 0.0f, new ModelRenderer(this), new ModelRenderer(this)));
-        } else {
-            modelParts.add(new ModelSpiderBody(0.0f, 0.0f, 0.0f, new ModelRenderer(this), new ModelRenderer(this)));
-            modelParts.add(new ModelSpiderLegs(0.0f,0.0f,0.0f,new ModelRenderer[]{
-                    new ModelRenderer(this),
-                    new ModelRenderer(this),
-                    new ModelRenderer(this),
-                    new ModelRenderer(this),
-                    new ModelRenderer(this),
-                    new ModelRenderer(this),
-                    new ModelRenderer(this),
-                    new ModelRenderer(this)
-            }));
-        }
-        if (random.nextBoolean())
-            modelParts.add(new ModelSpiderHead(0.0f, -10.0f, 0.0f, new ModelRenderer(this)));
-        else
-            modelParts.add(new ModelZombieHead(0.0f, 0.0f, 0.0f, new ModelRenderer(this)));
 
-        if (random.nextBoolean()) {
-            modelParts.add(new ModelSkeletonArm(0.0f, 0.0f, 0.0f, new ModelRenderer(this), new ModelRenderer(this)));
-        }
+        random = new Random();
 
-        if (random.nextBoolean()) {
-            modelParts.add(new ModelZombieBody(0.0f, 0.0f, 0.0f, new ModelRenderer(this)));
-        } else {
-            modelParts.add(new ModelSkeletonBody(0.0f, 0.0f, 0.0f, new ModelRenderer(this)));
-        }
+        ModelZombieLegs zombieLegs = new ModelZombieLegs(0.0f, 0.0f, 0.0f, new ModelRenderer(this), new ModelRenderer(this));
+        modelParts.add(zombieLegs);
+        PartSpawnLocation[] locations = zombieLegs.getPartSpawnLocations();
+        buildParts(locations);
 
         ImmutableList.Builder<ModelRenderer> builder = ImmutableList.builder();
         for (AbstractModelParts part : modelParts) {
@@ -89,6 +61,57 @@ public class ProceduralEntityModel<T extends Entity> extends SegmentedModel<T> {
     public void setRotationAngles(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         for (AbstractModelParts part : modelParts) {
             part.updateAngles((ProceduralEntity) entityIn,limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+        }
+    }
+
+    private void buildParts(PartSpawnLocation[] locations)
+    {
+        AbstractModelParts part = null;
+        PartSpawnLocation[] newLocations = null;
+        for (PartSpawnLocation psl : locations) {
+            switch (psl.getType()) {
+                case ARMS:
+                    modelParts.add(new ModelSkeletonArm(psl.getLocX(), psl.getLocY(), psl.getLocZ(), new ModelRenderer(this), new ModelRenderer(this)));
+                    break;
+                case BODY:
+                    part = new ModelSpiderBody(psl.getLocX(), psl.getLocY(), psl.getLocZ(), new ModelRenderer(this), new ModelRenderer(this));
+                    modelParts.add(part);
+                    newLocations = part.getPartSpawnLocations();
+                    buildParts(newLocations);
+                    break;
+                case HEAD:
+                    int chance = random.nextInt(100);
+                    if (chance <= 33) {
+                        if (random.nextBoolean()) {
+                            modelParts.add(new ModelZombieHead(psl.getLocX(), psl.getLocY(), psl.getLocZ(), new ModelRenderer(this)));
+                        } else {
+                            modelParts.add(new ModelSkeletonHead(psl.getLocX(), psl.getLocY(), psl.getLocZ(), new ModelRenderer(this)));
+                        }
+                    } else if (chance <= 66) {
+                        ModelSkeletonBody skeletonBody = new ModelSkeletonBody(psl.getLocX(), psl.getLocY(), psl.getLocZ(), new ModelRenderer(this));
+                        modelParts.add(skeletonBody);
+                        PartSpawnLocation[] skeletonLocs = skeletonBody.getPartSpawnLocations();
+                        buildParts(skeletonLocs);
+                    } else {
+                        part = new ModelSpiderBody(psl.getLocX(), psl.getLocY(), psl.getLocZ(), new ModelRenderer(this), new ModelRenderer(this));
+                        modelParts.add(part);
+                        newLocations = part.getPartSpawnLocations();
+                        buildParts(newLocations);
+
+                    }
+                    break;
+                case LEGS:
+                    boolean containsLeg = false;
+                    for (AbstractModelParts p : modelParts) {
+                        if (p instanceof ModelZombieLegs) {
+                            containsLeg = true;
+                        }
+                    }
+                    if (!containsLeg)
+                        modelParts.add(new ModelZombieLegs(psl.getLocX(), psl.getLocY(), psl.getLocZ(), new ModelRenderer(this), new ModelRenderer(this)));
+
+                    break;
+            }
         }
     }
 }

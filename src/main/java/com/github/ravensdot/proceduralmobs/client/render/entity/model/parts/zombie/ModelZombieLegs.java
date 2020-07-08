@@ -1,5 +1,6 @@
 package com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.zombie;
 
+import com.github.ravensdot.proceduralmobs.client.render.entity.model.ProceduralEntityModel;
 import com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.AbstractModelParts;
 import com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.PartSpawnLocation;
 import com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.PartType;
@@ -9,8 +10,8 @@ import net.minecraft.util.math.MathHelper;
 
 public class ModelZombieLegs extends AbstractModelParts {
 
-    private final ModelRenderer rightLeg;
-    private final ModelRenderer leftLeg;
+    private ModelRenderer rightLeg;
+    private ModelRenderer leftLeg;
     private final PartSpawnLocation bodySpawnLocation;
     private final PartType partType = PartType.LEGS;
 
@@ -19,15 +20,15 @@ public class ModelZombieLegs extends AbstractModelParts {
         super(offX, offY, offZ, leftLeg, rightLeg);
 
         //TODO: set location positions
-        bodySpawnLocation = new PartSpawnLocation(1.9f, 12.0f, 0.0f, PartType.BODY);
+        bodySpawnLocation = new PartSpawnLocation(1.9f - offX, 12.0f - offY, 0.0f - offZ, PartType.BODY);
 
         this.rightLeg = rightLeg;
-        this.rightLeg.setRotationPoint(-1.9F - offX, 12.0F + offY, 0.0f + offZ);
+        this.rightLeg.setRotationPoint(-1.9F + offX, 12.0F - offY, 0.0f - offZ);
         this.setRotationAngle(rightLeg, -0.4363F, 0.0F, 0.0873F);
         this.rightLeg.setTextureOffset(0, 16).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.0F, false);
 
         this.leftLeg = leftLeg;
-        this.leftLeg.setRotationPoint(1.9F + offX, 12.0F + offY, 0.0f + offZ);
+        this.leftLeg.setRotationPoint(1.9F - offX, 12.0F - offY, 0.0f - offZ);
         this.setRotationAngle(leftLeg, 0.3491F, 0.0F, 0.0F);
         this.leftLeg.setTextureOffset(0, 16).addBox(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, 0.0F, true);
     }
@@ -58,7 +59,7 @@ public class ModelZombieLegs extends AbstractModelParts {
     }
 
     @Override
-    public PartSpawnLocation[] getPartSpawnLocation() {
+    public PartSpawnLocation[] getPartSpawnLocations() {
         return new PartSpawnLocation[]{bodySpawnLocation};
     }
 

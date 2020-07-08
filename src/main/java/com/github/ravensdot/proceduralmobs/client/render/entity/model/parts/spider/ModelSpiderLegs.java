@@ -134,7 +134,7 @@ public class ModelSpiderLegs extends AbstractModelParts {
     }
 
     @Override
-    public PartSpawnLocation[] getPartSpawnLocation() {
+    public PartSpawnLocation[] getPartSpawnLocations() {
         return new PartSpawnLocation[]{bodySpawnLocation};
     }
 

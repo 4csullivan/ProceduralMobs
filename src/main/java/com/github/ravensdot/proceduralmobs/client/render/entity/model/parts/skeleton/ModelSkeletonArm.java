@@ -5,6 +5,7 @@ import com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.Part
 import com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.PartType;
 import com.github.ravensdot.proceduralmobs.entity.ProceduralEntity;
 import net.minecraft.client.renderer.model.ModelRenderer;
+import net.minecraft.item.BowItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
 
@@ -19,16 +20,16 @@ public class ModelSkeletonArm extends AbstractModelParts {
         super(offX, offY, offZ, leftArm, rightArm);
 
         //TODO: set location postions
-        spawnLocation = new PartSpawnLocation(5.0f + offX, 2.0f + offY, 0.0f + offZ, PartType.BODY);
+        spawnLocation = new PartSpawnLocation(0.0f, 0.0f + offY, 0.0f + offZ, PartType.BODY);
 
         this.leftArm = leftArm;
         this.rightArm = rightArm;
 
         this.rightArm.setTextureOffset(64,82).addBox(-1.0F, -2.0F, -1.0F, 2.0F, 12.0F, 2.0F, false);
-        this.rightArm.setRotationPoint(-spawnLocation.getLocX(), spawnLocation.getLocY(), spawnLocation.getLocZ());
+        this.rightArm.setRotationPoint(-offX, spawnLocation.getLocY(), spawnLocation.getLocZ());
 
         this.leftArm.setTextureOffset(64,82).addBox(-1.0F, -2.0F, -1.0F, 2.0F, 12.0F, 2.0F, true);
-        this.leftArm.setRotationPoint(spawnLocation.getLocX(), spawnLocation.getLocY(), spawnLocation.getLocZ());
+        this.leftArm.setRotationPoint(offX, spawnLocation.getLocY(), spawnLocation.getLocZ());
     }
 
     @Override
@@ -38,8 +39,23 @@ public class ModelSkeletonArm extends AbstractModelParts {
 
     @Override
     public ModelRenderer[] updateAngles(ProceduralEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+        this.rightArm.rotationPointZ = 0.0F;
+        this.rightArm.rotationPointX = -5.0F;
+        this.leftArm.rotationPointZ = 0.0F;
+        this.leftArm.rotationPointX = 5.0F;
+
+        this.rightArm.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F + (float)Math.PI) * 2.0F * limbSwingAmount * 0.5F / 1.0f;
+        this.leftArm.rotateAngleX = MathHelper.cos(limbSwing * 0.6662F) * 2.0F * limbSwingAmount * 0.5F / 1.0f;
+        this.rightArm.rotateAngleZ = 0.0F;
+        this.leftArm.rotateAngleZ = 0.0F;
+
+        this.rightArm.rotateAngleZ += MathHelper.cos(ageInTicks * 0.09F) * 0.05F + 0.05F;
+        this.leftArm.rotateAngleZ -= MathHelper.cos(ageInTicks * 0.09F) * 0.05F + 0.05F;
+        this.rightArm.rotateAngleX += MathHelper.sin(ageInTicks * 0.067F) * 0.05F;
+        this.leftArm.rotateAngleX -= MathHelper.sin(ageInTicks * 0.067F) * 0.05F;
+
         ItemStack itemStack = entityIn.getHeldItemMainhand();
-        if (entityIn.isAggressive() && (itemStack.isEmpty() || !(itemStack.getItem() instanceof net.minecraft.item.BowItem))) {
+        if (entityIn.isAggressive() && (itemStack.isEmpty() || !(itemStack.getItem() instanceof BowItem))) {
             float f = MathHelper.sin(limbSwingAmount * (float) Math.PI);
             float f1 = MathHelper.sin(1.0f - ((1.0f - limbSwingAmount) * (1.0f - limbSwingAmount)) * (float) Math.PI);
             this.rightArm.rotateAngleZ = 0.0F;
@@ -64,7 +80,7 @@ public class ModelSkeletonArm extends AbstractModelParts {
     }
 
     @Override
-    public PartSpawnLocation[] getPartSpawnLocation() {
+    public PartSpawnLocation[] getPartSpawnLocations() {
         return new PartSpawnLocation[]{spawnLocation};
     }
 }

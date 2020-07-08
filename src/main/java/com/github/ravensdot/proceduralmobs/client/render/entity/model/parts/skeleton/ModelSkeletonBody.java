@@ -10,6 +10,7 @@ public class ModelSkeletonBody extends AbstractModelParts {
 
     private final ModelRenderer body;
     private final PartSpawnLocation headSpawnLocation;
+    private final PartSpawnLocation armsSpawnLocation;
     private final PartSpawnLocation legsSpawnLocation;
     private final PartType partType = PartType.BODY;
 
@@ -18,12 +19,13 @@ public class ModelSkeletonBody extends AbstractModelParts {
         super(offX, offY, offZ, body);
 
         //TODO: set location postions
-        headSpawnLocation = new PartSpawnLocation(0.0f, 0.0f, 0.0f, PartType.HEAD);
-        legsSpawnLocation = new PartSpawnLocation(0.0f, 0.0f, 0.0f, PartType.LEGS);
+        headSpawnLocation = new PartSpawnLocation(0.0f, offY - 12.0f, 0.0f + offZ, PartType.HEAD);
+        armsSpawnLocation = new PartSpawnLocation(5.0f, offY - 10.0f, 0.0f + offZ, PartType.ARMS);
+        legsSpawnLocation = new PartSpawnLocation(0.0f, offY - 0.0f, 0.0f + offZ, PartType.LEGS);
 
         this.body = body;
-        this.body.setRotationPoint(0.0f + offX,0.0f + offY, 0.0f + offZ);
         this.body.setTextureOffset(80,82).addBox(-4.0f, 0.0f, -2.0f, 8.0f, 12.0f, 4.0F, 0.0F, false);
+        this.body.setRotationPoint(0.0f, offY - 12.0f, offZ - 0.0f);
     }
 
     @Override
@@ -33,8 +35,6 @@ public class ModelSkeletonBody extends AbstractModelParts {
 
     @Override
     public ModelRenderer[] updateAngles(ProceduralEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float HeadPitch) {
-        this.body.rotateAngleX = 0.0f;
-        this.body.rotationPointY = 0.0f;
         return new ModelRenderer[]{this.body};
     }
 
@@ -44,7 +44,7 @@ public class ModelSkeletonBody extends AbstractModelParts {
     }
 
     @Override
-    public PartSpawnLocation[] getPartSpawnLocation() {
-        return new PartSpawnLocation[]{headSpawnLocation, legsSpawnLocation};
+    public PartSpawnLocation[] getPartSpawnLocations() {
+        return new PartSpawnLocation[]{headSpawnLocation, armsSpawnLocation, legsSpawnLocation};
     }
 }

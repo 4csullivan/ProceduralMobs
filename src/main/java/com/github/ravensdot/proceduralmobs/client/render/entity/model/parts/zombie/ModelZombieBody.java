@@ -42,7 +42,7 @@ public class ModelZombieBody extends AbstractModelParts {
     }
 
     @Override
-    public PartSpawnLocation[] getPartSpawnLocation() {
+    public PartSpawnLocation[] getPartSpawnLocations() {
         return new PartSpawnLocation[0];
     }
 
