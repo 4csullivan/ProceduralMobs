@@ -6,6 +6,7 @@ import com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.skel
 import com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.skeleton.ModelSkeletonHead;
 import com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.spider.ModelSpiderBody;
 import com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.spider.ModelSpiderHead;
+import com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.zombie.ModelZombieArms;
 import com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.zombie.ModelZombieHead;
 import com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.zombie.ModelZombieLegs;
 import com.github.ravensdot.proceduralmobs.entity.ProceduralEntity;
@@ -71,7 +72,11 @@ public class ProceduralEntityModel<T extends Entity> extends SegmentedModel<T> {
         for (PartSpawnLocation psl : locations) {
             switch (psl.getType()) {
                 case ARMS:
-                    modelParts.add(new ModelSkeletonArm(psl.getLocX(), psl.getLocY(), psl.getLocZ(), new ModelRenderer(this), new ModelRenderer(this)));
+                    if (random.nextBoolean()) {
+                        modelParts.add(new ModelSkeletonArm(psl.getLocX(), psl.getLocY(), psl.getLocZ(), new ModelRenderer(this), new ModelRenderer(this)));
+                    } else {
+                        modelParts.add(new ModelZombieArms(psl.getLocX(),psl.getLocY(), psl.getLocZ(), new ModelRenderer(this), new ModelRenderer(this)));
+                    }
                     break;
                 case BODY:
                     part = new ModelSpiderBody(psl.getLocX(), psl.getLocY(), psl.getLocZ(), new ModelRenderer(this), new ModelRenderer(this));

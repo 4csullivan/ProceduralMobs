@@ -19,7 +19,7 @@ public class ModelHead extends AbstractModelParts {
     public ModelHead(float offX, float offY, float offZ, ModelRenderer ... head)
     {
         super(offX, offY, offZ, head);
-        bodySpawnLocation = new PartSpawnLocation(0.0f, 0.0f + offY, 0.0f + offZ, PartType.BODY);
+        bodySpawnLocation = new PartSpawnLocation(0.0f, 0.0f + offY, 0.0f + offZ, PartType.NONE);
 
         this.head = head[0];
         this.head.setRotationPoint(0.0f, 0.0f + offY, 0.0f + offZ);
@@ -40,7 +40,7 @@ public class ModelHead extends AbstractModelParts {
 
     @Override
     public PartType getPartType() {
-        return null;
+        return partType;
     }
 
     @Override
