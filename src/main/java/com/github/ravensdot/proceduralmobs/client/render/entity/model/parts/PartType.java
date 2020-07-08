@@ -1,6 +1,6 @@
 package com.github.ravensdot.proceduralmobs.client.render.entity.model.parts;
 
-public enum PartTypes {
+public enum PartType {
     LEGS,
     ARMS,
     BODY,

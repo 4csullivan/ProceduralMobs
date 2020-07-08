@@ -1,5 +1,8 @@
-package com.github.ravensdot.proceduralmobs.client.render.entity.model.parts;
+package com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.zombie;
 
+import com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.AbstractModelParts;
+import com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.PartSpawnLocation;
+import com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.PartType;
 import com.github.ravensdot.proceduralmobs.entity.ProceduralEntity;
 import net.minecraft.client.renderer.model.ModelRenderer;
 
@@ -7,7 +10,7 @@ public class ModelZombieHead extends AbstractModelParts
 {
     private ModelRenderer head;
     private PartSpawnLocation bodySpawnLocation;
-    private PartTypes partType = PartTypes.HEAD;
+    private PartType partType = PartType.HEAD;
 
     /**
      * Constructor, initializes parts and positions.
@@ -21,7 +24,7 @@ public class ModelZombieHead extends AbstractModelParts
         super(offX, offY, offZ, head);
 
         //TODO: set location postions
-        bodySpawnLocation = new PartSpawnLocation(0.0f, 0.0f, 0.0f, PartTypes.BODY);
+        bodySpawnLocation = new PartSpawnLocation(0.0f, 0.0f, 0.0f, PartType.BODY);
 
         this.head = head;
         this.head.setTextureOffset(0,0).addBox(-4.0f, -8.0f, -4.0f, 8.0f, 8.0f, 8.0f, false);
@@ -41,7 +44,7 @@ public class ModelZombieHead extends AbstractModelParts
     }
 
     @Override
-    public PartTypes getPartType() {
+    public PartType getPartType() {
         return partType;
     }
 

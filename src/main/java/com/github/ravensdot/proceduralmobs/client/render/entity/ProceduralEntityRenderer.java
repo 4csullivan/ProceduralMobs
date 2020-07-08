@@ -2,11 +2,9 @@ package com.github.ravensdot.proceduralmobs.client.render.entity;
 
 import com.github.ravensdot.proceduralmobs.ProceduralMobs;
 import com.github.ravensdot.proceduralmobs.client.render.entity.model.ProceduralEntityModel;
-import com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.ModelZombieLegs;
 import com.github.ravensdot.proceduralmobs.entity.ProceduralEntity;
 import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.renderer.entity.MobRenderer;
-import net.minecraft.entity.monster.ZombieEntity;
 import net.minecraft.util.ResourceLocation;
 
 public class ProceduralEntityRenderer extends MobRenderer<ProceduralEntity, ProceduralEntityModel<ProceduralEntity>> {

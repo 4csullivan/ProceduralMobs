@@ -1,5 +1,8 @@
-package com.github.ravensdot.proceduralmobs.client.render.entity.model.parts;
+package com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.skeleton;
 
+import com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.AbstractModelParts;
+import com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.PartSpawnLocation;
+import com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.PartType;
 import com.github.ravensdot.proceduralmobs.entity.ProceduralEntity;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.item.ItemStack;
@@ -9,14 +12,14 @@ public class ModelSkeletonArm extends AbstractModelParts {
 
     private final ModelRenderer leftArm, rightArm;
     private final PartSpawnLocation spawnLocation;
-    private final PartTypes partType = PartTypes.ARMS;
+    private final PartType partType = PartType.ARMS;
 
     public ModelSkeletonArm(float offX, float offY, float offZ, ModelRenderer leftArm, ModelRenderer rightArm)
     {
         super(offX, offY, offZ, leftArm, rightArm);
 
         //TODO: set location postions
-        spawnLocation = new PartSpawnLocation(5.0f + offX, 2.0f + offY, 0.0f + offZ, PartTypes.BODY);
+        spawnLocation = new PartSpawnLocation(5.0f + offX, 2.0f + offY, 0.0f + offZ, PartType.BODY);
 
         this.leftArm = leftArm;
         this.rightArm = rightArm;
@@ -56,7 +59,7 @@ public class ModelSkeletonArm extends AbstractModelParts {
     }
 
     @Override
-    public PartTypes getPartType() {
+    public PartType getPartType() {
         return partType;
     }
 

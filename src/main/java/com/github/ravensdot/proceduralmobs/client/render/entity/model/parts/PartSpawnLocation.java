@@ -4,20 +4,20 @@ public class PartSpawnLocation {
     private float locX;
     private float locY;
     private float locZ;
-    private PartTypes type;
+    private PartType type;
 
-    public PartSpawnLocation(float locX, float locY, float locZ, PartTypes type) {
+    public PartSpawnLocation(float locX, float locY, float locZ, PartType type) {
         this.locX = locX;
         this.locY = locY;
         this.locZ = locZ;
         this.type = type;
     }
 
-    public PartTypes getType() {
+    public PartType getType() {
         return type;
     }
 
-    public void setType(PartTypes type) {
+    public void setType(PartType type) {
         this.type = type;
     }
 

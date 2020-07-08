@@ -1,6 +1,5 @@
 package com.github.ravensdot.proceduralmobs.client.render.entity.model.parts;
 
-import com.github.ravensdot.proceduralmobs.client.render.entity.model.ProceduralEntityModel;
 import com.github.ravensdot.proceduralmobs.entity.ProceduralEntity;
 import net.minecraft.client.renderer.model.ModelRenderer;
 
@@ -40,7 +39,7 @@ public abstract class AbstractModelParts {
      */
     public abstract ModelRenderer[] updateAngles(ProceduralEntity entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch);
 
-    public abstract PartTypes getPartType();
+    public abstract PartType getPartType();
 
     public abstract PartSpawnLocation[] getPartSpawnLocation();
 }

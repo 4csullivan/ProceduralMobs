@@ -1,5 +1,8 @@
-package com.github.ravensdot.proceduralmobs.client.render.entity.model.parts;
+package com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.spider;
 
+import com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.AbstractModelParts;
+import com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.PartSpawnLocation;
+import com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.PartType;
 import com.github.ravensdot.proceduralmobs.entity.ProceduralEntity;
 import net.minecraft.client.renderer.model.ModelRenderer;
 
@@ -10,15 +13,15 @@ public class ModelSpiderBody extends AbstractModelParts {
     private final PartSpawnLocation headSpawn;
     private final PartSpawnLocation legBackSpawn;
     private final PartSpawnLocation legForwardSpawn;
-    private final PartTypes partType = PartTypes.BODY;
+    private final PartType partType = PartType.BODY;
 
     public ModelSpiderBody(float offX, float offY, float offZ, ModelRenderer neck, ModelRenderer body) {
         super(offX, offY, offZ, neck, body);
 
         //TODO: set location postions
-        headSpawn = new PartSpawnLocation(0.0f + offX, 15.0f + offY, 0.0f + offZ, PartTypes.HEAD);
-        legBackSpawn = new PartSpawnLocation(0.0f + offX, 15.0f + offY, 0.0f + offZ, PartTypes.BODY);
-        legForwardSpawn = new PartSpawnLocation(0.0f + offX, 15.0f + offY, 0.0f + offZ, PartTypes.BODY);
+        headSpawn = new PartSpawnLocation(0.0f + offX, 15.0f + offY, 0.0f + offZ, PartType.HEAD);
+        legBackSpawn = new PartSpawnLocation(0.0f + offX, 15.0f + offY, 0.0f + offZ, PartType.BODY);
+        legForwardSpawn = new PartSpawnLocation(0.0f + offX, 15.0f + offY, 0.0f + offZ, PartType.BODY);
 
         this.neck = neck;
         this.neck.setTextureOffset(64,0).addBox(-3.0F, -3.0F, -3.0F, 6.0F, 6.0F, 6.0F, 0.0F);
@@ -39,7 +42,7 @@ public class ModelSpiderBody extends AbstractModelParts {
     }
 
     @Override
-    public PartTypes getPartType() {
+    public PartType getPartType() {
         return partType;
     }
 

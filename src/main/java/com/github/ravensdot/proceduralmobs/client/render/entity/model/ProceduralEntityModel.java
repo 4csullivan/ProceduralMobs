@@ -1,21 +1,21 @@
 package com.github.ravensdot.proceduralmobs.client.render.entity.model;
 
-import com.github.ravensdot.proceduralmobs.ProceduralMobs;
 import com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.*;
+import com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.skeleton.ModelSkeletonArm;
+import com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.skeleton.ModelSkeletonBody;
+import com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.spider.ModelSpiderBody;
+import com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.spider.ModelSpiderHead;
+import com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.spider.ModelSpiderLegs;
+import com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.zombie.ModelZombieBody;
+import com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.zombie.ModelZombieHead;
+import com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.zombie.ModelZombieLegs;
 import com.github.ravensdot.proceduralmobs.entity.ProceduralEntity;
-import com.github.ravensdot.proceduralmobs.init.ModEntityTypes;
 import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Maps;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.entity.model.SegmentedModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.MobEntity;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.*;
 
@@ -33,11 +33,24 @@ public class ProceduralEntityModel<T extends Entity> extends SegmentedModel<T> {
         this.textureHeight = TEXTURE_HEIGHT;
         //modelParts.put(PartTypes.ZOMBIE_LEGS, new ModelZombieLegs(new ModelRenderer(this), new ModelRenderer(this)));
         //ModelZombieLegs legs = (ModelZombieLegs)modelParts.get(PartTypes.ZOMBIE_LEGS);
+        float cumulativeX = 0.0f;
+        float cumulativeY = 0.0f;
+        float cumulativeZ = 0.0f;
         Random random = new Random();
         if (random.nextBoolean()) {
             modelParts.add(new ModelZombieLegs(0.0f, 0.0f, 0.0f, new ModelRenderer(this), new ModelRenderer(this)));
         } else {
             modelParts.add(new ModelSpiderBody(0.0f, 0.0f, 0.0f, new ModelRenderer(this), new ModelRenderer(this)));
+            modelParts.add(new ModelSpiderLegs(0.0f,0.0f,0.0f,new ModelRenderer[]{
+                    new ModelRenderer(this),
+                    new ModelRenderer(this),
+                    new ModelRenderer(this),
+                    new ModelRenderer(this),
+                    new ModelRenderer(this),
+                    new ModelRenderer(this),
+                    new ModelRenderer(this),
+                    new ModelRenderer(this)
+            }));
         }
         if (random.nextBoolean())
             modelParts.add(new ModelSpiderHead(0.0f, -10.0f, 0.0f, new ModelRenderer(this)));

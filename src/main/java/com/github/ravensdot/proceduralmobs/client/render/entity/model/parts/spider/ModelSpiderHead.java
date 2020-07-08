@@ -1,19 +1,22 @@
-package com.github.ravensdot.proceduralmobs.client.render.entity.model.parts;
+package com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.spider;
 
+import com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.AbstractModelParts;
+import com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.PartSpawnLocation;
+import com.github.ravensdot.proceduralmobs.client.render.entity.model.parts.PartType;
 import com.github.ravensdot.proceduralmobs.entity.ProceduralEntity;
 import net.minecraft.client.renderer.model.ModelRenderer;
 
 public class ModelSpiderHead extends AbstractModelParts {
     private final ModelRenderer head;
     private final PartSpawnLocation spawnLocation;
-    private final PartTypes partType = PartTypes.HEAD;
+    private final PartType partType = PartType.HEAD;
 
     public ModelSpiderHead(float offX, float offY, float offZ, ModelRenderer head)
     {
         super(offX, offY, offZ, head);
 
         //TODO: set location postions
-        spawnLocation = new PartSpawnLocation(0.0f + offX, 15.0f + offY, -3.0f + offZ, PartTypes.HEAD);
+        spawnLocation = new PartSpawnLocation(0.0f + offX, 15.0f + offY, -3.0f + offZ, PartType.HEAD);
         this.head = head;
         head.setRotationPoint(spawnLocation.getLocX(), spawnLocation.getLocY(), spawnLocation.getLocZ());
         head.setTextureOffset(96, 4).addBox(-4.0F, -4.0F, -8.0F, 8.0F, 8.0F, 8.0F, 0.0F, false);
@@ -33,7 +36,7 @@ public class ModelSpiderHead extends AbstractModelParts {
     }
 
     @Override
-    public PartTypes getPartType() {
+    public PartType getPartType() {
         return partType;
     }
 
